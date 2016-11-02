@@ -17,7 +17,7 @@ env:
   - PATH="$PATH:$HOME/.composer/vendor/bin"
   - DRUPAL_TI_MODULE_NAME="scheduler"
   - DRUPAL_TI_SIMPLETEST_GROUP="Scheduler"
-  - DRUPAL_TI_ENVIRONMENT="drupal-7"
+  - DRUPAL_TI_ENVIRONMENT="drupal-8"
   - DRUPAL_TI_DB="drupal_travis_db"
   - DRUPAL_TI_DB_URL="mysql://root:@127.0.0.1/drupal_travis_db"
   - DRUPAL_TI_WEBSERVER_URL="http://127.0.0.1"
@@ -46,7 +46,6 @@ mysql:
   username: root
   encoding: utf8
 before_install:
-- echo "We found $TEST_VAR"
 - composer self-update
 # Installing drupal_ti manually as my pull request hasn't been merged yet.
 - mkdir -p "$HOME/.composer/vendor/bin"
@@ -56,13 +55,10 @@ before_install:
 - composer install
 - ln -sf $HOME/drupal_ti/drupal-ti "$HOME/.composer/vendor/bin"
 - git clone --branch 7.x-1.x https://git.drupal.org/project/$DRUPAL_TI_MODULE_NAME.git $TRAVIS_BUILD_DIR/$DRUPAL_TI_MODULE_NAME
-- echo "test"
-#- drupal-ti --include "$TRAVIS_BUILD_DIR/scheduler/drupal_ti/before/before_install.sh"
 - drupal-ti before_install
 install:
 - drupal-ti install
 before_script:
-#- drupal-ti --include "$TRAVIS_BUILD_DIR/scheduler/drupal_ti/before/before_script.sh"
 - drupal-ti before_script
 script:
 - drupal-ti script
@@ -70,4 +66,3 @@ after_script:
 - drupal-ti after_script
 notifications:
   email: false
-  # tes
