@@ -39,6 +39,21 @@ env:
   - DRUPAL_TI_GITHUB_NAME="Levi Govaerts"
   - ENCRYPTION_LABEL="4bbb05651be3"
   - COMMIT_AUTHOR_EMAIL="legovaer@me.com"
+  - DCI_CheckoutDir=$HOME/checkout
+  - DCI_RunScript=/var/www/html/core/scripts/run-tests.sh
+  - DCI_PHPVersion=5.6
+  - DCI_JobType=simpletest
+  - DCI_ComposerInstall=True
+  - DCI_CoreBranch=8.3.x
+  - DCI_Patch=add_readme_file-2809329-5.patch,modules/drupal_coverage_core
+  - DCI_AdditionalRepositories=git,git://git.drupal.org/project/drupal_coverage_core.git,8.x-1.x,modules/drupal_coverage_core,1;
+  - DCI_Color=True
+  - DCI_JunitXml=xml
+  - DCI_Fetch=https://www.drupal.org/files/issues/add_readme_file-2809329-5.patch,modules/drupal_coverage_core
+  - DCI_TestItem=directory:modules/drupal_coverage_core
+  - DCI_Concurrency=31
+  - DCI_CoreRepository=git://git.drupal.org/project/drupal.git
+  - DCI_DBVersion=mysql-5.5
 
   matrix:
   - DRUPAL_TI_RUNNERS="simpletest"
@@ -55,15 +70,22 @@ before_install:
 - cd drupal_ti/
 - composer install
 - ln -sf $HOME/drupal_ti/drupal-ti "$HOME/.composer/vendor/bin"
-- git clone --branch 7.x-1.x https://git.drupal.org/project/$DRUPAL_TI_MODULE_NAME.git $TRAVIS_BUILD_DIR/$DRUPAL_TI_MODULE_NAME
-- drupal-ti before_install
+- cd $HOME
+- git clone --branch production https://git.drupal.org/project/drupalci_testbot.git
+- cd drupalci_testbot
+- composer install
+- ln -sf $HOME/drupalci_testbot/drupalci "$HOME/.composer/vendor/bin"
+- drupalci docker-rm containers
+- #git clone --branch 8.x-1.x https://git.drupal.org/project/$DRUPAL_TI_MODULE_NAME.git $TRAVIS_BUILD_DIR/$DRUPAL_TI_MODULE_NAME
+- #drupal-ti before_install
 install:
-- drupal-ti install
+#- drupal-ti install
 before_script:
-- drupal-ti before_script
+#- drupal-ti before_script
 script:
-- drupal-ti script
+- drupalci run simpletest
+#- drupal-ti script
 after_script:
-- drupal-ti after_script
+#- drupal-ti after_script
 notifications:
   email: false
