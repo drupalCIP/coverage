@@ -90,6 +90,7 @@ before_install:
   - composer install
   - ln -sf $HOME/drupalci_testbot/drupalci "$HOME/.composer/vendor/bin"
   - drupalci docker-rm containers
+  - drupalci init
   - #git clone --branch 8.x-1.x https://git.drupal.org/project/$DRUPAL_TI_MODULE_NAME.git $TRAVIS_BUILD_DIR/$DRUPAL_TI_MODULE_NAME
   - #drupal-ti before_install
 install:
