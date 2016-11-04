@@ -49,11 +49,11 @@ env:
   - DCI_ComposerInstall=True
   - DCI_CoreBranch=8.3.x
   - DCI_Patch=add_readme_file-2809329-5.patch,modules/drupal_coverage_core
-  - DCI_AdditionalRepositories=git,git://git.drupal.org/project/scheduler.git,8.x-1.x,modules/scheduler,1;
+  #- DCI_AdditionalRepositories=git,git://git.drupal.org/project/scheduler.git,8.x-1.x,modules/scheduler,1
   - DCI_Color=True
   - DCI_JunitXml=xml
-  - DCI_Fetch=modules/scheduler
-  - DCI_TestItem=directory:modules/scheduler
+  #- DCI_Fetch=modules/scheduler
+  #- DCI_TestItem=module:scheduler
   - DCI_Concurrency=31
   - DCI_CoreRepository=git://git.drupal.org/project/drupal.git
   - DCI_DBVersion=mysql-5.5
@@ -83,12 +83,15 @@ before_install:
   - drupalci docker-rm containers
   - drupalci init --no-interaction
   - #git clone --branch 8.x-1.x https://git.drupal.org/project/$DRUPAL_TI_MODULE_NAME.git $TRAVIS_BUILD_DIR/$DRUPAL_TI_MODULE_NAME
-  - #drupal-ti before_install
+  - #drupal-ti before_install DCI_Fetch=modules/scheduler
 install:
 #- drupal-ti install
 before_script:
 #- drupal-ti before_script
 script:
+  - drupalci config:set DCI_AdditionalRepositories=git,git://git.drupal.org/project/scheduler.git,8.x-1.x,modules/scheduler,1
+  - drupalci config:set DCI_Fetch=modules/scheduler
+  - drupalci config:set DCI_TestItem=module:scheduler
   - drupalci run simpletest
 #- drupal-ti script
 after_script:
