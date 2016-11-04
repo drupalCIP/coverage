@@ -8,10 +8,11 @@ services:
 
 cache:
   bundler: true
-  apt: true#
+  apt: true
   directories:
   - "$HOME/.composer/cache"
   - "$HOME/.drush/cache"
+  - "$HOME/docker"
 
 matrix:
   fast_finish: true
@@ -51,6 +52,7 @@ mysql:
   encoding: utf8
 before_install:
   - ./scripts/downgrade-docker.sh
+  - if [[ -d $HOME/docker ]]; then ls $HOME/docker/*.tar.gz | xargs -I {file} sh -c "zcat {file} | docker load"; fi
   - composer self-update
   - mkdir -p "$HOME/.composer/vendor/bin"
   - cd $HOME
@@ -80,9 +82,14 @@ install:
 before_script:
 #- drupal-ti before_script
 script:
-  - sudo $HOME/.composer/vendor/bin/drupalci run simpletest
+  - drupalci run simpletest
 #- drupal-ti script
 after_script:
 #- drupal-ti after_script
 notifications:
   email: false
+before_cache:
+  # Save tagged docker images
+  - >
+    mkdir -p $HOME/docker && docker images -a --filter='dangling=false' --format '{{.Repository}}:{{.Tag}} {{.ID}}'
+    | xargs -n 2 -t sh -c 'test -e $HOME/docker/$1.tar.gz || docker save $0 | gzip -2 > $HOME/docker/$1.tar.gz'
