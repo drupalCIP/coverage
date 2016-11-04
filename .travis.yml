@@ -60,7 +60,7 @@ before_install:
   - cd drupalci_testbot
   - composer install
   - ln -sf $HOME/drupalci_testbot/drupalci "$HOME/.composer/vendor/bin"
-  - drupalci config:set DCI_CheckoutDir=/var/www/html/checkout
+  - drupalci config:set DCI_CheckoutDir=$HOME/www/html/checkout
   - drupalci config:set DCI_RunScript=/var/www/html/core/scripts/run-tests.sh
   - drupalci config:set DCI_PHPVersion=5.5
   - drupalci config:set DCI_JobType=simpletest
@@ -76,10 +76,11 @@ before_install:
   - drupalci config:set DCI_CoreRepository=git://git.drupal.org/project/drupal.git
   - drupalci config:set DCI_DBVersion=mysql-5.5
   - drupalci docker-rm containers
-  - if [[ -d $HOME/docker ]]; then drupalci init --no-interaction; fi
+  - if [[ ! -d $HOME/docker ]]; then drupalci init --no-interaction; fi
   - sudo chmod 0777 /var/www/html
   - sudo chmod 0777 /var/www/html/checkout
   - sudo chmod 0777 /tmp
+  - mkdir -p $HOME/www/html/checkout
 
 install:
 #- drupal-ti install
