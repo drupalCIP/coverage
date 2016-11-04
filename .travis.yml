@@ -68,30 +68,21 @@ mysql:
 before_install:
   - ./scripts/downgrade-docker.sh
   - composer self-update
-  # Installing drupal_ti manually as my pull request hasn't been merged yet.
-  - mkdir -p "$HOME/.composer/vendor/bin"
-  - cd $HOME
-  - git clone --branch travis-add-coverage-support https://github.com/legovaer/drupal_ti
-  - cd drupal_ti/
-  - composer install
-  - ln -sf $HOME/drupal_ti/drupal-ti "$HOME/.composer/vendor/bin"
-  - cd $HOME
   - git clone --branch 20160701_production https://git.drupal.org/project/drupalci_testbot.git
   - cd drupalci_testbot
   - composer install
   - ln -sf $HOME/drupalci_testbot/drupalci "$HOME/.composer/vendor/bin"
+  - drupalci config:set DCI_AdditionalRepositories=git,git://git.drupal.org/project/scheduler.git,8.x-1.x,modules/scheduler,1
+  - drupalci config:set DCI_Fetch=modules/scheduler
+  - drupalci config:set DCI_TestItem=directory:modules/scheduler
   - drupalci docker-rm containers
   - drupalci init --no-interaction
-  - #git clone --branch 8.x-1.x https://git.drupal.org/project/$DRUPAL_TI_MODULE_NAME.git $TRAVIS_BUILD_DIR/$DRUPAL_TI_MODULE_NAME
-  - #drupal-ti before_install DCI_Fetch=modules/scheduler
 install:
 #- drupal-ti install
 before_script:
 #- drupal-ti before_script
 script:
-  - drupalci config:set DCI_AdditionalRepositories=git,git://git.drupal.org/project/scheduler.git,8.x-1.x,modules/scheduler,1
-  - drupalci config:set DCI_Fetch=modules/scheduler
-  - drupalci config:set DCI_TestItem=directory:modules/scheduler
+
   - drupalci run simpletest
 #- drupal-ti script
 after_script:
