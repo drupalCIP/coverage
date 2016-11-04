@@ -76,9 +76,9 @@ before_install:
   - drupalci config:set DCI_CoreRepository=git://git.drupal.org/project/drupal.git
   - drupalci config:set DCI_DBVersion=mysql-5.5
   - drupalci docker-rm containers
-  - drupalci init --no-interaction
-  - sudo chmod 0777 /var/www
-  - sudo chmod 0777 /var/www/checkout
+  - if [[ -d $HOME/docker ]]; then drupalci init --no-interaction; fi
+  - sudo chmod 0777 /var/www/html
+  - sudo chmod 0777 /var/www/html/checkout
   - sudo chmod 0777 /tmp
 
 install:
