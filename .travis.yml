@@ -42,22 +42,6 @@ env:
   - DRUPAL_TI_GITHUB_NAME="Levi Govaerts"
   - ENCRYPTION_LABEL="4bbb05651be3"
   - COMMIT_AUTHOR_EMAIL="legovaer@me.com"
-  - DCI_CheckoutDir=/var/www/html/checkout
-  - DCI_RunScript=/var/www/html/core/scripts/run-tests.sh
-  - DCI_PHPVersion=5.6
-  - DCI_JobType=simpletest
-  - DCI_ComposerInstall=True
-  - DCI_CoreBranch=8.3.x
-  - DCI_Patch=add_readme_file-2809329-5.patch,modules/drupal_coverage_core
-  #- DCI_AdditionalRepositories=git,git://git.drupal.org/project/scheduler.git,8.x-1.x,modules/scheduler,1
-  - DCI_Color=True
-  - DCI_JunitXml=xml
-  #- DCI_Fetch=modules/scheduler
-  #- DCI_TestItem=module:scheduler
-  - DCI_Concurrency=31
-  - DCI_CoreRepository=git://git.drupal.org/project/drupal.git
-  - DCI_DBVersion=mysql-5.5
-  #- DCI_TestItem=directory:modules/scheduler
 
   matrix:
   - DRUPAL_TI_RUNNERS="simpletest"
@@ -74,9 +58,21 @@ before_install:
   - cd drupalci_testbot
   - composer install
   - ln -sf $HOME/drupalci_testbot/drupalci "$HOME/.composer/vendor/bin"
+  - drupalci config:set DCI_CheckoutDir=/var/www/html/checkout
+  - drupalci config:set DCI_RunScript=/var/www/html/core/scripts/run-tests.sh
+  - drupalci config:set DCI_PHPVersion=5.6
+  - drupalci config:set DCI_JobType=simpletest
+  - drupalci config:set DCI_ComposerInstall=True
+  - drupalci config:set DCI_CoreBranch=8.3.x
+  - drupalci config:set DCI_Patch=add_readme_file-2809329-5.patch,modules/drupal_coverage_core
   - drupalci config:set DCI_AdditionalRepositories=git,git://git.drupal.org/project/scheduler.git,8.x-1.x,modules/scheduler,1
   - drupalci config:set DCI_Fetch=modules/scheduler
   - drupalci config:set DCI_TestItem=directory:modules/scheduler
+  - drupalci config:set DCI_Color=True
+  - drupalci config:set DCI_JunitXml=xml
+  - drupalci config:set DCI_Concurrency=31
+  - drupalci config:set DCI_CoreRepository=git://git.drupal.org/project/drupal.git
+  - drupalci config:set DCI_DBVersion=mysql-5.5
   - drupalci docker-rm containers
   - drupalci init --no-interaction
 install:
