@@ -1,5 +1,6 @@
 echo "Downgrading Docker to make it compatible with DrupalCI"
 sudo mkdir -p /var/www/html/checkout
+sudo chmod 777 /var/www/html/checkout
 ln -s /var/www/html /var/www/html/checkout
 sudo sh -c 'echo "deb https://apt.dockerproject.org/repo ubuntu-precise main" > /etc/apt/sources.list.d/docker.list'
 sudo apt-key adv --keyserver hkp://p80.pool.sks-keyservers.net:80 --recv-keys 58118E89F3A912897C070ADBF76221572C52609D
