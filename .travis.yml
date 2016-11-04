@@ -57,7 +57,7 @@ env:
   - DCI_Concurrency=31
   - DCI_CoreRepository=git://git.drupal.org/project/drupal.git
   - DCI_DBVersion=mysql-5.5
-  - DCI_TestItem=directory:modules/scheduler
+  #- DCI_TestItem=directory:modules/scheduler
 
   matrix:
   - DRUPAL_TI_RUNNERS="simpletest"
@@ -91,7 +91,7 @@ before_script:
 script:
   - drupalci config:set DCI_AdditionalRepositories=git,git://git.drupal.org/project/scheduler.git,8.x-1.x,modules/scheduler,1
   - drupalci config:set DCI_Fetch=modules/scheduler
-  - drupalci config:set DCI_TestItem=module:scheduler
+  - drupalci config:set DCI_TestItem=directory:modules/scheduler
   - drupalci run simpletest
 #- drupal-ti script
 after_script:
