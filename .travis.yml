@@ -76,7 +76,7 @@ before_install:
   - composer install
   - ln -sf $HOME/drupal_ti/drupal-ti "$HOME/.composer/vendor/bin"
   - cd $HOME
-  - git clone --branch 20160701_production https://git.drupal.org/project/drupalci_testbot.git
+  - git clone --branch production https://git.drupal.org/project/drupalci_testbot.git
   - cd drupalci_testbot
   - composer install
   - ln -sf $HOME/drupalci_testbot/drupalci "$HOME/.composer/vendor/bin"
