@@ -88,7 +88,7 @@ before_script:
 #- drupal-ti before_script
 script:
   - drupalci run simpletest
-  - tail /var/lib/docker/containers/*/*.log
+  - sudo tail /var/lib/docker/containers/*/*.log
 #- drupal-ti script
 after_script:
 #- drupal-ti after_script
