@@ -60,7 +60,7 @@ before_install:
   - ln -sf $HOME/drupalci_testbot/drupalci "$HOME/.composer/vendor/bin"
   - drupalci config:set DCI_CheckoutDir=/var/www/html/checkout
   - drupalci config:set DCI_RunScript=/var/www/html/core/scripts/run-tests.sh
-  - drupalci config:set DCI_PHPVersion=5.6
+  - drupalci config:set DCI_PHPVersion=5.5
   - drupalci config:set DCI_JobType=simpletest
   - drupalci config:set DCI_ComposerInstall=True
   - drupalci config:set DCI_CoreBranch=8.3.x
