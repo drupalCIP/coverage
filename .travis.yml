@@ -69,6 +69,7 @@ before_install:
   - ./scripts/downgrade-docker.sh
   - composer self-update
   - mkdir -p "$HOME/.composer/vendor/bin"
+  - cd $HOME
   - git clone --branch 20160701_production https://git.drupal.org/project/drupalci_testbot.git
   - cd drupalci_testbot
   - composer install
