@@ -4,6 +4,7 @@ sudo chmod 777 /var/www/html/checkout
 sudo chmod 777 /tmp
 sudo chown -R travis:travis /tmp
 sudo chown -R travis:travis /var/www
+sudo useradd www-data
 sudo sh -c 'echo "deb https://apt.dockerproject.org/repo ubuntu-precise main" > /etc/apt/sources.list.d/docker.list'
 sudo apt-key adv --keyserver hkp://p80.pool.sks-keyservers.net:80 --recv-keys 58118E89F3A912897C070ADBF76221572C52609D
 sudo apt-get update
