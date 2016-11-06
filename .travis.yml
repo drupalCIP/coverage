@@ -19,28 +19,6 @@ matrix:
 env:
   global:
   - PATH="$PATH:$HOME/.composer/vendor/bin"
-  - DRUPAL_TI_MODULE_NAME="scheduler"
-  - DRUPAL_TI_SIMPLETEST_GROUP="Scheduler"
-  - DRUPAL_TI_ENVIRONMENT="drupal-8"
-  - DRUPAL_TI_DB="drupal_travis_db"
-  - DRUPAL_TI_DB_URL="mysql://root:@127.0.0.1/drupal_travis_db"
-  - DRUPAL_TI_WEBSERVER_URL="http://127.0.0.1"
-  - DRUPAL_TI_WEBSERVER_PORT="8080"
-  - DRUPAL_TI_SIMPLETEST_ARGS="--verbose --color --concurrency 4 --url $DRUPAL_TI_WEBSERVER_URL:$DRUPAL_TI_WEBSERVER_PORT"
-  - DRUPAL_TI_BEHAT_DIR="./tests/behat"
-  - DRUPAL_TI_BEHAT_ARGS=""
-  - DRUPAL_TI_BEHAT_YML="behat.yml.dist"
-  - DRUPAL_TI_BEHAT_SCREENSIZE_COLOR="1280x1024x16"
-  - DRUPAL_TI_BEHAT_SELENIUM_VERSION="2.48.2"
-  - DRUPAL_TI_BEHAT_DRIVER="phantomjs"
-  - DRUPAL_TI_BEHAT_BROWSER="firefox"
-  - DRUPAL_TI_PHPUNIT_ARGS=""
-  - DRUPAL_TI_COVERAGE="satooshi/php-coveralls:0.6.*"
-  - DRUPAL_TI_COVERAGE_FILE="build/logs/clover.xml"
-  - DRUPAL_TI_SIMPLETEST_COVERAGE="0"
-  - DRUPAL_TI_SIMPLETEST_COVERAGE_GENERATE_BADGES="1"
-  - DRUPAL_TI_GITHUB_EMAIL="legovaer@me.com"
-  - DRUPAL_TI_GITHUB_NAME="Levi Govaerts"
   - ENCRYPTION_LABEL="4bbb05651be3"
   - COMMIT_AUTHOR_EMAIL="legovaer@me.com"
 
@@ -51,6 +29,7 @@ mysql:
   username: root
   encoding: utf8
 before_install:
+  - ls -ls $HOME
   - ./scripts/downgrade-docker.sh
   - if [[ -d $HOME/docker ]]; then ls $HOME/docker/*.tar.gz | xargs -I {file} sh -c "zcat {file} | docker load"; fi
   - composer self-update
